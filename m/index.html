@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หน้าแรก</title>
+  <style>
+    body {
+      background-color: pink;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    button {
+      background-color: #ff66b2; /* สีชมพู */
+      color: white;
+      font-size: 18px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px; /* มุมโค้งมน */
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff3385; /* สีชมพูเข้มขึ้นเมื่อชี้เมาส์ */
+      transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อชี้เมาส์ */
+    }
+    .heart {
+      font-size: 50px;
+      color: red;
+      position: absolute;
+      animation: explode 1s forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="1.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <div class="content">
+    <button onclick="startAnimation()">Welcome to my world</button>
+  </div>
+
+  <script>
+    function startAnimation() {
+      // ซ่อนปุ่มเมื่อกด
+      const button = document.querySelector('button');
+      button.style.display = 'none';
+
+      // สร้างลูกเล่นหัวใจ
+      for (let i = 0; i < 10; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.top = `${Math.random() * 100}vh`;
+        document.body.appendChild(heart);
+      }
+
+      // ไปยังหน้าที่สองหลังจาก 1 วินาที
+      setTimeout(() => {
+        window.location.href = 'page2.html';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

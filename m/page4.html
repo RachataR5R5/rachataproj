@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หน้าที่สี่</title>
+  <style>
+    body {
+      background-color: #ffccff; /* พื้นหลังสีชมพูอ่อน */
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      animation: backgroundAnimation 10s infinite alternate;
+    }
+
+    /* แอนิเมชันพื้นหลัง */
+    @keyframes backgroundAnimation {
+      0% {
+        background-color: #ffccff;
+      }
+      50% {
+        background-color: #ffff99;
+      }
+      100% {
+        background-color: #ff99cc;
+      }
+    }
+
+    h1 {
+      font-size: 4em;
+      color: #ff3399;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      animation: textAnimation 3s infinite alternate;
+    }
+
+    /* แอนิเมชันข้อความ */
+    @keyframes textAnimation {
+      0% {
+        transform: translateY(0);
+        color: #ff3399;
+      }
+      50% {
+        transform: translateY(-10px);
+        color: #ff00ff;
+      }
+      100% {
+        transform: translateY(10px);
+        color: #ff66cc;
+      }
+    }
+
+    .btn {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 20px;
+      cursor: pointer;
+      margin-top: 40px;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+    }
+
+    .audio-container {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ข้อความใหญ่แสดงบนหน้า -->
+  <h1 id="message">กดคำว่าข้อความมถัดไปดูสิอย่าลืมกดเพลงก่อนนะ</h1>
+
+  <!-- ปุ่มเพื่อเล่น/หยุดเพลง (ปุ่มแรก) -->
+  <button class="btn" id="musicButton" onclick="toggleMusic()">เล่นเพลง</button>
+
+  <!-- ปุ่มข้อความถัดไป (ปุ่มที่สอง) -->
+  <button class="btn" onclick="nextMessage()">ข้อความถัดไป</button>
+
+  <!-- ปุ่มย้อนกลับ (ปุ่มที่สาม) -->
+  <button class="btn" onclick="previousMessage()">ย้อนกลับข้อความ</button>
+
+  <!-- ปุ่มย้อนกลับ (ปุ่มที่สาม) -->
+  <button class="btn" onclick="goBack()">ย้อนกลับ</button>
+
+  <!-- การแทรกเพลงโดยไม่แสดงแถบควบคุม -->
+  <audio id="music" src="1.mp3" preload="auto"></audio>
+
+  <script>
+    let isPlaying = false;
+    const music = document.getElementById("music");
+    const musicButton = document.getElementById("musicButton");
+
+    // ฟังก์ชันเล่น/หยุดเพลง
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause(); // หยุดเพลง
+        isPlaying = false;
+        musicButton.textContent = "เล่นเพลง"; // เปลี่ยนข้อความปุ่มเป็น "เล่นเพลง"
+      } else {
+        music.play(); // เล่นเพลง
+        isPlaying = true;
+        musicButton.textContent = "หยุดเพลง"; // เปลี่ยนข้อความปุ่มเป็น "หยุดเพลง"
+      }
+    }
+
+    // ฟังก์ชันย้อนกลับไปยังหน้าที่สาม
+    function goBack() {
+      window.history.back(); // ใช้คำสั่งนี้เพื่อย้อนกลับไปหน้าก่อนหน้า
+    }
+
+    // ฟังก์ชันเปลี่ยนข้อความ
+    let messageIndex = 0;
+    const messages = [
+    "กดคำว่าข้อความมถัดไปดูสิอย่าลืมกดเพลงก่อนนะ",
+      "1.คิมเจอมิ้วครั้งแรกที่ตีแบตมองไม่ค่อยเห็นไม่ได้ใส่แว่น",
+      "2.ตอนนั้นคิมมองว่าเด็กที่ไหนก็ไม่รู้น่ารักหมวยๆมัดผมด้วย หมวยเล็ก",
+      "3.คิมเป็นคนขี้เขินมากๆๆๆๆถ้าทำไรเขินๆแทบจะทำไม่ได้เลย",
+      "4.ตอนนั้นเล่นแบตแล้วเหมือนแบบรู้สึกว่าปิ้งปลื้มคนนี้ตั้งแต่ครั้งแรกที่เห็น",
+      "5.คิมเลยแบบพยายามทำใจเดินไปขอไอจี พยายามเท่าไรก็ไม่กล้า",
+      "6.ตอนนั้นมีเพื่อนหลายคนที่มองมิ้วน่ารักหนึ่งในนั้นคิมด้วยเพราะสายตาสั้น",
+      "7.แล้วคุยกับเพื่อนแบบไปช่วยขอให้หน่อยได้มั้ยแต่เพื่อนไม่อยาก",
+      "8.คิมเลยไปขอคนเดียวแต่ก็ไม่กล้าเลยกลับมา",
+      "9.สุดท้ายเพื่อนก็พาไปขอ",
+      "10.พอดูเฟสละแบบไม่ชอบเลยดูโหดมากดูหยิ่งด้วย",
+      "11.แต่พอได้คุยก็เรี่มรู้สึกว่ากลัวเราไม่ได้ชอบมิ้ว",
+      "12.กลัวมิ้วมาชอบแล้วทำให้ผิดหวัง",
+      "13.แต่เรี่มคุยไปรู้สึกชอบมาก มากกว่าเก่าทำให้รู้สึกยิ่งมั่นใจว่าชอบแน่ๆ",
+      "14.คิมอาจจะมีเรื่องให้ไม่สบายใจบ่อยๆ คิมไม่รู้ว่าเพราะอะไร",
+      "15.ทำไมเป็นแบบนั้นและก็สร้างเรื่อง คิมขอโทษที่ทำให้ผิดหวัง",
+      "16.มีสิ่งที่ทำให้ดูผิดหวังมากๆขอโทษคั้บ",
+      "18.คิมไม่รู้ว่าจะได้มีโอกาสได้คุยกันอีกมั้ยแต่ว่า",
+      "19.อยากจะบอกว่าคิมชอบมิ้วมากจริงๆ",
+      "20.ถึงมิ้วจะไม่มีใจแล้ว",
+      "21.คิมอยากขอบคุณทุกๆอย่่างที่ผ่านมา",
+      "22.ตอนนั้นให้อภัยคิมให้โอกาสดีใจมากๆๆ",
+      "23.ความรู้สึกมิ้วอาจจะกลับมาไม่ได้แล้วแต่ว่า",
+      "24.อยากให้รู้ว่าคิมดีใจที่ได้คุยกับมิ้วนะขอบคุณมิ้วมากๆๆนะ",
+      "25.มิ้วเก่งมากๆเป็นเด็กดีๆน้า",
+      "พี่คั้บพี่น่ารักชอบพี่นะคั้บ",
+
+    ];
+
+    function nextMessage() {
+      messageIndex = (messageIndex + 1) % messages.length;
+      document.getElementById("message").innerText = messages[messageIndex];
+    }
+
+    function previousMessage() {
+      messageIndex = (messageIndex - 1 + messages.length) % messages.length;
+      document.getElementById("message").innerText = messages[messageIndex];
+    }
+  </script>
+</body>
+</html>
